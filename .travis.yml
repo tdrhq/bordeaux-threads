@@ -4,12 +4,12 @@ language: generic
 
 env:
   jobs:
-    - LISP=sbcl
-    - LISP=ccl
-    - LISP=ecl
-    - LISP=abcl
-    - LISP=clisp
-    - LISP=allegro
+    # - LISP=sbcl
+    # - LISP=ccl
+    # - LISP=ecl
+    # - LISP=abcl
+    # - LISP=clisp
+    - LISP=allegro ACL_HASHBANG_DEBUG=true
     # - LISP=sbcl32
     # - lisp=ccl32
     # - LISP=cmucl
@@ -17,8 +17,8 @@ env:
 jobs:
   fast_finish: true
   allow_failures:
-    - env: LISP=clisp
-    - env: LISP=allegro
+    # - env: LISP=clisp
+    # - env: LISP=allegro
     # - env: LISP=sbcl32
     # - env: LISP=ccl32
     # - env: LISP=cmucl
@@ -39,9 +39,10 @@ install:
   - curl -L https://raw.githubusercontent.com/lispci/cl-travis/master/install.sh | sh
 
 script:
-  - cl -e "(cl:in-package :cl-user)
+  - cl --debug -e "(cl:in-package :cl-user)
            (prin1 (lisp-implementation-type)) (terpri) (prin1 (lisp-implementation-version)) (terpri)
-           (ql:quickload :bordeaux-threads/test :verbose t)
-           (5am:run! :bordeaux-threads)
-           (uiop:quit
-             (if (5am:run! :bordeaux-threads-2) 0 -1))"
+           (room t)"
+           # (ql:quickload :bordeaux-threads/test :verbose t)
+           # (5am:run! :bordeaux-threads)
+           # (uiop:quit
+           #   (if (5am:run! :bordeaux-threads-2) 0 -1))"
